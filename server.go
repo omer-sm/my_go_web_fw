@@ -17,7 +17,7 @@ func Run(port int) {
 // adds a route to the server that puts the component in a root layout
 func AddPage(path, pageName string, opts map[string]string) {
 	DefPage(pageName, opts)
-	http.HandleFunc(path, func(w http.ResponseWriter, req *http.Request) {
+	http.HandleFunc("GET "+path, func(w http.ResponseWriter, req *http.Request) {
 		fmt.Println("\033[32mGET: '" + path + "'\033[0m")
 		w.Header().Set("Content-Type", "text/html")
 		io.WriteString(w, Render("_page_"+pageName, nil))
@@ -26,7 +26,7 @@ func AddPage(path, pageName string, opts map[string]string) {
 
 // adds a route to the server
 func AddRoute(path, componentName string) {
-	http.HandleFunc(path, func(w http.ResponseWriter, req *http.Request) {
+	http.HandleFunc("GET "+path, func(w http.ResponseWriter, req *http.Request) {
 		fmt.Println("\033[32mGET: '" + path + "'\033[0m")
 		w.Header().Set("Content-Type", "text/html")
 		io.WriteString(w, Render(componentName, nil))
